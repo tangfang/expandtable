@@ -1,0 +1,123 @@
+<div class="table-scrollable">
+  <table class="table table-striped table-bordered table-hover dataTable no-footer">
+    <thead>
+      <tr role="row">
+        <th style="width: 60px;"></th>
+        <th ng-repeat="column in columns" ng-bind="column.text"></th>
+      </tr>
+    </thead>
+    <tbody ng-repeat="data in store">
+      <tr ng-click="checked(data)" ng-class="{'active': data.selected == true}"class="gradeX odd tr-select">
+        <td class="hidden-480">
+          <span class="row-details row-details-close" ng-click="expandclose2($event, data)"></span>
+          <input type="checkbox">
+        </td>
+        <td ng-repeat="column in columns" ng-bind="column.getData(data)" ></td>
+      </tr>
+      <tr ng-hide="!data.expand">
+        <td></td>
+        <td colspan="{{columns.length}}" >
+          <table class="table table-striped table-bordered table-hover">
+            <thead>
+              <tr>
+                <th ng-repeat="cColumn in childrenColumns" ng-bind="cColumn.text"></th>  
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="child in data.children">
+                <td ng-repeat="cColumn in childrenColumns" ng-bind="cColumn.getData(child)"></td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<hr />
+
+<div class="expand-table table-striped dataTable">
+  <div class="expand-table-thead">
+    <ul style="width: 60px;"></ul>
+    <ul ng-repeat="column in columns" ng-bind="column.text"></ul>
+  </div>
+  <div class="expand-table-tbody" ng-repeat="data in store">
+    <div class="expand-table-row">
+      <ul class="expand-table-cell" style="width: 60px;">
+        <span class="row-details row-details-close" ></span>
+        <input type="checkbox">
+      </ul>
+      <ul class="expand-table-cell" ng-repeat="column in columns" ng-bind="column.getData(data)"></ul>
+    </div>
+    <div class="expand-table-row" ng-if="data.children">
+      <div style="display: table-column-group">
+        <div style="display: table-column">
+          <table class="table table-striped table-bordered table-hover">
+          <thead>
+            <tr>
+              <th ng-repeat="cColumn in childrenColumns" ng-bind="cColumn.text"></th>  
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="child in data.children">
+              <td ng-repeat="cColumn in childrenColumns" ng-bind="cColumn.getData(child)"></td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <!-- <ul style="width: 60px;"></ul>
+      <ul class="expand-table-cell">
+        <table class="table table-striped table-bordered table-hover">
+          <thead>
+            <tr>
+              <th ng-repeat="cColumn in childrenColumns" ng-bind="cColumn.text"></th>  
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="child in data.children">
+              <td ng-repeat="cColumn in childrenColumns" ng-bind="cColumn.getData(child)"></td>
+            </tr>
+          </tbody>
+        </table>
+      </ul> -->
+    </div>
+  </div>
+</div>
+
+<div class="table-scrollable">
+  <table class="table table-striped table-bordered table-hover dataTable no-footer">
+    <thead>
+      <tr role="row">
+        <th style="width: 60px;"></th>
+        <th ng-repeat="column in columns" ng-bind="column.text"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="data in store" ng-click="checked(data)" ng-class="{'active': data.selected == true}"class="gradeX odd tr-select">
+        <td class="hidden-480">
+          <span class="row-details row-details-close" ng-click="expandclose($event, data)"></span>
+          <input type="checkbox">
+        </td>
+        <td ng-repeat="column in columns" ng-bind="column.getData(data)" ></td>
+      </tr>
+      <!-- <expand-table-child-node ng-repeat="data in store"></expand-table-child-node> -->
+    </tbody>
+  </table>
+</div>
+
+<div class="row" ng-if="pagination">
+  <div class="col-md-5 col-sm-12">
+    <div class="dataTables_info">共{{pagination.total}}条记录,当前第{{pagination.currentPage}}页,共{{pagination.pageCount}}页</div>
+  </div>
+  <div class="col-md-7 col-sm-12"><div class="dataTables_paginate paging_bootstrap_full_number">
+    <ul class="pagination">
+      <li class="prev"><a class="btn" ng-disabled="pagination.currentPage <= 1" ng-click="pagination.goToFirst()"><span class="hidden-480">首页</span></a></li>
+      <li class="prev"><a class="btn" ng-disabled="pagination.currentPage <= 1" ng-click="pagination.goToPrevious()"><span class="hidden-480">前页</span></a></li>
+      <li class="next"><a class="btn" ng-disabled="pagination.currentPage >= pagination.pageCount" ng-click="pagination.goToNext()"><span class="hidden-480">后页</span></a></li>
+      <li class="next"><a class="btn" ng-disabled="pagination.currentPage == pagination.pageCount" ng-click="pagination.goToLast()"><span class="hidden-480">末页</span></a></li>
+    </ul>
+  </div>
+  </div>
+</div>
